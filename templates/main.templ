@@ -35,8 +35,8 @@ templ Skills() {
 templ Experience(xpList []*experience.ExperienceItemProps) {
 	@Base("Experiências") {
 		@Header("/experience")
-		<main id="main-conteiner" class="p-10">
-			<div class="m-10 flex justify-evenly flex-col">
+		<main id="main-conteiner" class="p-10 flex justify-center">
+			<div class="m-10 flex justify-evenly flex-col w-[1500px] min-w-[700px]">
 				for _, xp := range xpList {
 					@ExperienceItem(xp)
 				}
