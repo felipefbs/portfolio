@@ -3,7 +3,7 @@ module.exports = {
   content: ["./templates/**/*.{templ,html}"],
   theme: {
     fontFamily: {
-      'body': ["Anonymous Pro", 'monospace']
+      body: ['Lato'],
     },
     extend: {},
   },
