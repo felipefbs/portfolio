@@ -1,0 +1,47 @@
+package templates
+
+import "github.com/felipefbs/portfolio/experience"
+
+templ Base(title string) {
+	<!DOCTYPE html>
+	<html lang="pt-BR">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<link href="./static/styles/output.css" rel="stylesheet"/>
+			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+			<title>{ title }</title>
+		</head>
+		<body class="bg-[#2D3470]">
+			{ children... }
+		</body>
+	</html>
+}
+
+templ About() {
+	@Base("Sobre") {
+		@Header("/about")
+		<main id="main-conteiner" class="p-10"></main>
+	}
+}
+
+templ Skills() {
+	@Base("Competências") {
+		@Header("/skills")
+		<main id="main-conteiner" class="p-10"></main>
+	}
+}
+
+templ Experience(xpList []*experience.ExperienceItemProps) {
+	@Base("Experiências") {
+		@Header("/experience")
+		<main id="main-conteiner" class="p-10"></main>
+	}
+}
+
+templ Projects() {
+	@Base("Projetos") {
+		@Header("/projects")
+		<main id="main-conteiner" class="p-10"></main>
+	}
+}
