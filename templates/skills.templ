@@ -20,7 +20,6 @@ templ SkillItem(skill, selected string) {
 		hover:bg-slate-900
         hover:text-white
 		aria-selected:bg-[#2D3470]"
-		hx-target="#xp-list"
 		aria-selected={ fmt.Sprint(selected == skill) }
 	>{ skill }</a>
 }

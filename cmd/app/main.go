@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"slices"
@@ -101,14 +100,15 @@ func main() {
 
 	router.Handle("/about", templ.Handler(templates.About()))
 
-	langaugeList := make([]string, 0)
+	languageList := make([]string, 0)
 	for _, item := range xpList {
-		langaugeList = append(langaugeList, item.Languages...)
+		languageList = append(languageList, item.Languages...)
 	}
 
-	router.Handle("/experience", templ.Handler(templates.Experience(xpList, removeDuplicate[string](langaugeList))))
-
-	router.Get("/skills/{skill}", getXpListFiltered)
+	router.Get("/experience", func(w http.ResponseWriter, r *http.Request) {
+		skills := r.URL.Query().Get("skill")
+		templates.Experience(getXpListFiltered(skills), removeDuplicate[string](languageList), skills).Render(r.Context(), w)
+	})
 
 	router.Handle("/projects", templ.Handler(templates.Projects()))
 
@@ -122,9 +122,11 @@ func main() {
 	}
 }
 
-func getXpListFiltered(w http.ResponseWriter, r *http.Request) {
-	skill := chi.URLParam(r, "skill")
-	fmt.Println(skill)
+func getXpListFiltered(skill string) []*experience.ExperienceItemProps {
+	if skill == "" {
+		return xpList
+	}
+
 	l := make([]*experience.ExperienceItemProps, 0)
 	for _, v := range xpList {
 		if slices.ContainsFunc[[]string, string](v.Languages, func(s string) bool {
@@ -134,7 +136,7 @@ func getXpListFiltered(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	templates.ExperienceList(l).Render(r.Context(), w)
+	return l
 }
 
 func removeDuplicate[T comparable](sliceList []T) []T {

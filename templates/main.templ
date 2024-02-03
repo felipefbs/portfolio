@@ -29,11 +29,11 @@ templ About() {
 	}
 }
 
-templ Experience(xpList []*experience.ExperienceItemProps, languageList []string) {
+templ Experience(xpList []*experience.ExperienceItemProps, languageList []string, selected string) {
 	@Base("Experiências") {
 		@Header("/experience")
 		<main id="main-container" class="p-10 flex justify-center flex-col">
-			@Skills(languageList, "")
+			@Skills(languageList, selected)
 			@ExperienceList(xpList)
 		</main>
 	}
