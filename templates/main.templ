@@ -29,13 +29,6 @@ templ About() {
 	}
 }
 
-templ Skills() {
-	@Base("Competências") {
-		@Header("/skills")
-		<main id="main-conteiner" class="p-10"></main>
-	}
-}
-
 templ Experience(xpList []*experience.ExperienceItemProps) {
 	@Base("Experiências") {
 		@Header("/experience")

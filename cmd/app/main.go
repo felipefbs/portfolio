@@ -89,10 +89,10 @@ func main() {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/about", http.StatusPermanentRedirect)
 	})
+
 	mux.Handle("/about", templ.Handler(templates.About()))
 	mux.Handle("/experience", templ.Handler(templates.Experience([]*experience.ExperienceItemProps{theia, apoio, lsd, resilia, gcompi})))
 	mux.Handle("/projects", templ.Handler(templates.Projects()))
-	mux.Handle("/skills", templ.Handler(templates.Skills()))
 
 	server := http.Server{
 		Addr:    ":8080",
