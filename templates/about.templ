@@ -1,0 +1,46 @@
+package templates
+
+import "github.com/felipefbs/portfolio/experience"
+
+templ AboutContent() {
+	<p class="text-white bg-[#050819] text-2xl w-full mb-10 p-5">
+		Especializado em desenvolvimento Back-End e com conhecimentos sólidos em áreas adjacentes como segurança da informação, comunicação entre serviços, banco de dados entre outros assuntos.
+		Possuo experiência em desenvolvimento de APIs REST com arquitetura de microsserviços utilizando metodologias como TDD e modelagem de negocio utilizando DDD.
+		Facilidade de trabalho remoto em equipe, principalmente utilizando metodologias ágeis e ferramentas de versionamento de código.
+		Graduado no curso superior de Tecnologia em Telemática pelo Instituto Federal de Educação, Ciência e Tecnologia da Paraíba, Campus de Campina Grande.
+		Sempre procurando aperfeiçoar os conhecimentos em desenvolvimento de software, em especial arquitetura de software.
+	</p>
+	@Education(&experience.EducationItemProps{
+		Type:             "Curso Online",
+		Title:            "Desenvolvedor Full Stack && Full Cycle",
+		Course:           "Curso Full Cycle",
+		Organization:     "Full Cycle",
+		OrganizationLink: "https://curso.fullcycle.com.br/curso-fullcycle/",
+		Location:         "Online",
+		// Duration:         "2017-2021",
+	})
+	@Education(&experience.EducationItemProps{
+		Type:             "Formação Academica",
+		Title:            "Tecnólogo em Telématica",
+		Course:           "Curso superior de Tecnologia em Telématica",
+		Organization:     "IFPB",
+		OrganizationLink: "http://ifpb.com.br",
+		Location:         "Campina Grande - PB",
+		Duration:         "2017-2021",
+	})
+}
+
+templ Education(item *experience.EducationItemProps) {
+	<div class="bg-[#050819] text-white w-full hover:scale-[103%] transition-transform my-4 p-5">
+		<h1>{ item.Type } </h1>
+		<div class="flex justify-between mb-2.5">
+			<div>
+				// <p>{ item.Course }</p>
+				<span class="text-lg font-bold">{ item.Title }</span>
+				<a class="text-lg font-semibold underline target:shadow-lg" href={ templ.URL(item.OrganizationLink) } target="_blank">{ "@"+item.Organization }</a>
+				<p class="text-sm">{ item.Location }</p>
+			</div>
+			<strong>{ item.Duration }</strong>
+		</div>
+	</div>
+}
