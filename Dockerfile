@@ -10,7 +10,6 @@ RUN go build -o app ./cmd/app/main.go
 FROM scratch
 WORKDIR /app
 COPY --from=golang-builder app/static/ ./static/
-COPY --from=golang-builder app/templates/*_templ.go ./templates/
 COPY --from=golang-builder app/app .
 EXPOSE 8080
 CMD [ "./app" ]
