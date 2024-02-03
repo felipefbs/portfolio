@@ -1,0 +1,27 @@
+package templates
+
+import "fmt"
+
+templ Skills(languageList []string, selected string) {
+	<div class="skill-list flex ">
+		for _, item := range languageList {
+			@SkillItem(item, selected)
+		}
+	</div>
+}
+
+templ SkillItem(skill, selected string) {
+	<a
+		href={ templ.SafeURL(fmt.Sprintf("/experience?%v", skill)) }
+		class="
+        w-[100px] 
+        h-[100px]
+        bg-[#95adda] 
+        focus:bg-black 
+        focus:text-white
+        hover:bg-slate-900
+        hover:text-white"
+		hx-get={ "/skills/" + skill }
+		hx-target="#xp-list"
+	>{ skill }</a>
+}

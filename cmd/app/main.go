@@ -1,12 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"slices"
+	"strings"
 
 	"github.com/a-h/templ"
 	"github.com/felipefbs/portfolio/experience"
 	"github.com/felipefbs/portfolio/templates"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 var (
@@ -31,11 +36,11 @@ var (
 		Location:         "Rio de Janeiro - RJ (Remoto)",
 		Duration:         "Fev, 2022 - Jun, 2022",
 		Responsibilities: []string{
-			"Implementação serviços utilizando GoLang em conjunto a diversos padrões de mercado para garantir rastreabilidade, consistência e manutenibilidade de código",
+			"Implementação serviços utilizando Go em conjunto a diversos padrões de mercado para garantir rastreabilidade, consistência e manutenibilidade de código",
 			"Ampliação e manutenção de diversos serviços em Typescript utilizados para o gerenciamento de limpeza de salas de hospitais",
 		},
 		Technologies: []string{"NestJS", "Swagger", "AWS (API Gateway)"},
-		Languages:    []string{"GoLang", "Typescript", "MongoDB"},
+		Languages:    []string{"Go", "Typescript", "MongoDB"},
 	}
 	lsd = &experience.ExperienceItemProps{
 		JobTitle:         "Desenvolvedor e Pesquisador",
@@ -47,7 +52,7 @@ var (
 		Responsibilities: []string{
 			"Pesquisa de soluções de segurança da informação para a plataforma da VMWare baseado na virtualização do chip TPM2.0",
 			"Desenvolvimento e aplicação das soluções para garantir melhor integridade de maquinas virtuais utilizando a solução do vTPM utilizando Go+VMWare SDK"},
-		Languages: []string{"GoLang", "Shell Script"},
+		Languages: []string{"Go", "Shell Script"},
 	}
 	resilia = &experience.ExperienceItemProps{
 		JobTitle:         "Facilitador Tech",
@@ -80,26 +85,66 @@ var (
 	}
 )
 
+var xpList = []*experience.ExperienceItemProps{theia, apoio, lsd, resilia, gcompi}
+
 func main() {
-	mux := http.NewServeMux()
+	router := chi.NewRouter()
+
+	router.Use(middleware.Logger)
 
 	fileHandler := http.FileServer(http.Dir("./static"))
-	mux.Handle("/static/", http.StripPrefix("/static/", fileHandler))
+	router.Handle("/static/*", http.StripPrefix("/static/", fileHandler))
 
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/about", http.StatusPermanentRedirect)
 	})
 
-	mux.Handle("/about", templ.Handler(templates.About()))
-	mux.Handle("/experience", templ.Handler(templates.Experience([]*experience.ExperienceItemProps{theia, apoio, lsd, resilia, gcompi})))
-	mux.Handle("/projects", templ.Handler(templates.Projects()))
+	router.Handle("/about", templ.Handler(templates.About()))
+
+	langaugeList := make([]string, 0)
+	for _, item := range xpList {
+		langaugeList = append(langaugeList, item.Languages...)
+	}
+
+	router.Handle("/experience", templ.Handler(templates.Experience(xpList, removeDuplicate[string](langaugeList))))
+
+	router.Get("/skills/{skill}", getXpListFiltered)
+
+	router.Handle("/projects", templ.Handler(templates.Projects()))
 
 	server := http.Server{
 		Addr:    ":8080",
-		Handler: mux,
+		Handler: router,
 	}
 
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func getXpListFiltered(w http.ResponseWriter, r *http.Request) {
+	skill := chi.URLParam(r, "skill")
+	fmt.Println(skill)
+	l := make([]*experience.ExperienceItemProps, 0)
+	for _, v := range xpList {
+		if slices.ContainsFunc[[]string, string](v.Languages, func(s string) bool {
+			return strings.ToLower(s) == strings.ToLower(skill)
+		}) {
+			l = append(l, v)
+		}
+	}
+
+	templates.ExperienceList(l).Render(r.Context(), w)
+}
+
+func removeDuplicate[T comparable](sliceList []T) []T {
+	allKeys := make(map[T]bool)
+	list := []T{}
+	for _, item := range sliceList {
+		if _, value := allKeys[item]; !value {
+			allKeys[item] = true
+			list = append(list, item)
+		}
+	}
+	return list
 }

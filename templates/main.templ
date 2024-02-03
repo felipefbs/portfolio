@@ -21,7 +21,7 @@ templ Base(title string) {
 templ About() {
 	@Base("Sobre") {
 		@Header("/about")
-		<main id="main-conteiner" class="p-10 flex justify-center">
+		<main id="main-container" class="p-10 flex justify-center">
 			<div class="m-10 flex justify-evenly flex-col w-[1500px] min-w-[700px]">
 				@AboutContent()
 			</div>
@@ -29,15 +29,12 @@ templ About() {
 	}
 }
 
-templ Experience(xpList []*experience.ExperienceItemProps) {
+templ Experience(xpList []*experience.ExperienceItemProps, languageList []string) {
 	@Base("Experiências") {
 		@Header("/experience")
-		<main id="main-conteiner" class="p-10 flex justify-center">
-			<div class="m-10 flex justify-evenly flex-col w-[1500px] min-w-[700px]">
-				for _, xp := range xpList {
-					@ExperienceItem(xp)
-				}
-			</div>
+		<main id="main-container" class="p-10 flex justify-center flex-col">
+			@Skills(languageList, "")
+			@ExperienceList(xpList)
 		</main>
 	}
 }
@@ -45,6 +42,6 @@ templ Experience(xpList []*experience.ExperienceItemProps) {
 templ Projects() {
 	@Base("Projetos") {
 		@Header("/projects")
-		<main id="main-conteiner" class="p-10"></main>
+		<main id="main-container" class="p-10"></main>
 	}
 }

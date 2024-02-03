@@ -2,6 +2,14 @@ package templates
 
 import "github.com/felipefbs/portfolio/experience"
 
+templ ExperienceList(itemList []*experience.ExperienceItemProps) {
+	<div id="xp-list" class="m-10 flex justify-evenly flex-col w-[1500px] min-w-[700px]">
+		for _, xp := range itemList {
+			@ExperienceItem(xp)
+		}
+	</div>
+}
+
 templ ExperienceItem(item *experience.ExperienceItemProps) {
 	<div class="bg-[#050819] text-white m-5 p-3 min-w-96 max-w-4xl even:self-end hover:scale-[103%] transition-transform">
 		<div class="flex justify-between mb-2.5">
