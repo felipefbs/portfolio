@@ -3,6 +3,22 @@ package templates
 import "github.com/felipefbs/portfolio/experience"
 
 templ AboutContent() {
+	<div class="flex pl-10 mb-10 bg-[#0C0D2D]">
+		<img
+			src="/static/images/felipe_ferreira.jpeg"
+			alt="felipe ferreira"
+			class="w-60 h-60 object-cover overflow-visible "
+		/>
+		<div class="text-white m-5 ">
+			<h1 class="text-7xl mb-2 ">Felipe Ferreira</h1>
+			<strong class="text-xl">| Backend Developer specializend in Go |</strong>
+			<div class="social text-black flex w-[150px] justify-between m-2">
+				@SocialIcon("https://github.com/felipefbs", "/static/images/github.png", "github")
+				@SocialIcon("https://instagram.com/felipef.bs", "/static/images/instagram.png", "instagram")
+				@SocialIcon("https://linkedin.com/in/felipefbs", "/static/images/linkedin.png", "linkedin")
+			</div>
+		</div>
+	</div>
 	<p class="text-white bg-[#050819] text-2xl w-full mb-10 p-5">
 		Especializado em desenvolvimento Back-End e com conhecimentos sólidos em áreas adjacentes como segurança da informação, comunicação entre serviços, banco de dados entre outros assuntos.
 		Possuo experiência em desenvolvimento de APIs REST com arquitetura de microsserviços utilizando metodologias como TDD e modelagem de negocio utilizando DDD.
@@ -17,7 +33,7 @@ templ AboutContent() {
 		Organization:     "Full Cycle",
 		OrganizationLink: "https://curso.fullcycle.com.br/curso-fullcycle/",
 		Location:         "Online",
-		// Duration:         "2017-2021",
+		Duration:         "2024",
 	})
 	@Education(&experience.EducationItemProps{
 		Type:             "Formação Academica",
@@ -28,6 +44,10 @@ templ AboutContent() {
 		Location:         "Campina Grande - PB",
 		Duration:         "2017-2021",
 	})
+}
+
+templ SocialIcon(url, imgPath, alt string) {
+	<a class="bg-[#95adda] rounded-full" href={ templ.SafeURL(url) } target="_blank"><img class="w-[30px] h-[30px]" src={ imgPath } alt={ alt }/></a>
 }
 
 templ Education(item *experience.EducationItemProps) {
