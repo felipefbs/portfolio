@@ -1,0 +1,29 @@
+package templates
+
+import "fmt"
+
+templ Header(selected string) {
+	<header>
+		<nav class="bg-[#0C0D2D] flex justify-around h-10 items-center mx-0" hx-boost="true">
+			@HeaderAnchor("/about", "Sobre", selected)
+			@HeaderAnchor("/projects", "Projetos", selected)
+			@HeaderAnchor("/experience", "Experiências", selected)
+			@HeaderAnchor("/skills", "Competências", selected)
+		</nav>
+	</header>
+}
+
+templ HeaderAnchor(slug templ.SafeURL, text, selected  string ) {
+	<a
+		href={ slug }
+		class="px-2.5 mx-0
+			 hover:bg-[#3A4886]
+			 aria-selected:bg-[#2D3470]
+			 text-white
+             flex-1
+             text-center
+             leading-10
+			 transition-colors"
+		aria-selected={ fmt.Sprint(selected == string(slug)) }
+	>{ text }</a>
+}
