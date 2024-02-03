@@ -3,7 +3,7 @@ package templates
 import "fmt"
 
 templ Skills(languageList []string, selected string) {
-	<div class="skill-list flex ">
+	<div class="skill-list flex" hx-boost="true">
 		for _, item := range languageList {
 			@SkillItem(item, selected)
 		}
@@ -12,16 +12,15 @@ templ Skills(languageList []string, selected string) {
 
 templ SkillItem(skill, selected string) {
 	<a
-		href={ templ.SafeURL(fmt.Sprintf("/experience?%v", skill)) }
+		href={ templ.URL("/experience?skill=" + skill) }
 		class="
         w-[100px] 
         h-[100px]
-        bg-[#95adda] 
-        focus:bg-black 
-        focus:text-white
-        hover:bg-slate-900
-        hover:text-white"
-		hx-get={ "/skills/" + skill }
+        bg-[#95adda]
+		hover:bg-slate-900
+        hover:text-white
+		aria-selected:bg-[#2D3470]"
 		hx-target="#xp-list"
+		aria-selected={ fmt.Sprint(selected == skill) }
 	>{ skill }</a>
 }
