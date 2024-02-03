@@ -1,0 +1,42 @@
+package templates
+
+import "github.com/felipefbs/portfolio/experience"
+
+templ ExperienceItem(item *experience.ExperienceItemProps) {
+	<div class="bg-[#050819] text-white m-5 p-3 min-w-96 max-w-4xl even:self-end hover:scale-[103%] transition-transform">
+		<div class="flex justify-between mb-2.5">
+			<div class="job">
+				<span class="text-lg font-bold">{ item.JobTitle }</span>
+				<a class="text-lg font-semibold underline target:shadow-lg" href={ templ.URL(item.OrganizationLink) } target="_blank">{ "@"+item.Organization }</a>
+				<p class="text-sm">{ item.Location }</p>
+			</div>
+			<strong>{ item.Duration }</strong>
+		</div>
+		<div class="my-5">
+			<p>Linguagens utilizadas</p>
+			for index, i := range item.Languages {
+				if index != 0 {
+					,
+				}
+				<strong>{ i }</strong>
+			}
+			<p>Outras tecnologias utilizadas</p>
+			for index, i := range item.Technologies {
+				if index != 0 {
+					,
+				}
+				<strong>{ i }</strong>
+			}
+		</div>
+		<div class="mt-5">
+			<p>Fui responsavel pela...</p>
+			<ul class="list-disc list-inside">
+				for _, i := range item.Responsibilities {
+					<li>
+						<strong>{ i }</strong>
+					</li>
+				}
+			</ul>
+		</div>
+	</div>
+}
