@@ -42,9 +42,11 @@ templ Experience(xpList []*portfolio.JobExperienceItemProps, languageList []stri
 	}
 }
 
-templ Projects() {
+templ Projects(itemList []*portfolio.ProjectItemProps) {
 	@Base("Projetos") {
 		@Header("/projects")
-		<main id="main-container" class="p-10"></main>
+		<main id="main-container" class="p-10">
+			@ProjectList(itemList)
+		</main>
 	}
 }

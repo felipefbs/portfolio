@@ -1,0 +1,48 @@
+package templates
+
+import "github.com/felipefbs/portfolio/portfolio"
+
+templ ProjectList(itemList []*portfolio.ProjectItemProps) {
+	<div id="project-list" class="m-10 flex flex-col w-full max-w-[1500px]">
+		for _, project := range itemList {
+			@ProjectItem(project)
+		}
+	</div>
+}
+
+templ ProjectItem(item *portfolio.ProjectItemProps) {
+	<div class="bg-[#050819] text-white m-5 p-3 min-w-96 max-w-4xl even:self-end hover:scale-[103%] transition-transform">
+		<div class="flex justify-between mb-2.5">
+			<div class="job">
+				<p class="text-sm">{ item.Type }</p>
+				<a class="text-2xl font-semibold underline target:shadow-lg" href={ templ.URL(item.RepositoryLink) } target="_blank">{ item.Title }</a>
+			</div>
+			<strong>{ item.Year }</strong>
+		</div>
+		<div class="my-5">
+			<p>Linguagens utilizadas</p>
+			for index, i := range item.Languages {
+				if index != 0 {
+					,
+				}
+				<strong>{ i }</strong>
+			}
+			<p>Outras tecnologias utilizadas</p>
+			for index, i := range item.Technologies {
+				if index != 0 {
+					,
+				}
+				<strong>{ i }</strong>
+			}
+		</div>
+		<div class="mt-5">
+			<ul class="list-none">
+				for _, i := range item.Description {
+					<li>
+						<strong>{ i }</strong>
+					</li>
+				}
+			</ul>
+		</div>
+	</div>
+}
