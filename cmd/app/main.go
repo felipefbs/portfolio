@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"slices"
@@ -11,12 +12,29 @@ import (
 	"github.com/felipefbs/portfolio/templates"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"golang.org/x/net/websocket"
 )
 
 func main() {
 	router := chi.NewRouter()
 
 	router.Use(middleware.Logger)
+	router.Get("/reload", func(w http.ResponseWriter, r *http.Request) {
+		websocket.Handler(func(ws *websocket.Conn) {
+			defer ws.Close()
+
+			err := websocket.Message.Send(ws, "reload")
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			msg := ""
+			err = websocket.Message.Receive(ws, &msg)
+			if err != nil {
+				fmt.Println(err)
+			}
+		}).ServeHTTP(w, r)
+	})
 
 	fileHandler := http.FileServer(http.Dir("./static"))
 	router.Handle("/static/*", http.StripPrefix("/static/", fileHandler))
