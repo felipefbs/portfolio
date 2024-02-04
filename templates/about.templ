@@ -1,8 +1,8 @@
 package templates
 
-import "github.com/felipefbs/portfolio/experience"
+import "github.com/felipefbs/portfolio/portfolio"
 
-templ AboutContent() {
+templ AboutContent(educationList []*portfolio.EducationItemProps) {
 	<div class="flex pl-10 mb-10 bg-[#0C0D2D]">
 		<img
 			src="/static/images/felipe_ferreira.jpeg"
@@ -26,31 +26,16 @@ templ AboutContent() {
 		Graduado no curso superior de Tecnologia em Telemática pelo Instituto Federal de Educação, Ciência e Tecnologia da Paraíba, Campus de Campina Grande.
 		Sempre procurando aperfeiçoar os conhecimentos em desenvolvimento de software, em especial arquitetura de software.
 	</p>
-	@Education(&experience.EducationItemProps{
-		Type:             "Curso Online",
-		Title:            "Desenvolvedor Full Stack && Full Cycle",
-		Course:           "Curso Full Cycle",
-		Organization:     "Full Cycle",
-		OrganizationLink: "https://curso.fullcycle.com.br/curso-fullcycle/",
-		Location:         "Online",
-		Duration:         "2024",
-	})
-	@Education(&experience.EducationItemProps{
-		Type:             "Formação Academica",
-		Title:            "Tecnólogo em Telématica",
-		Course:           "Curso superior de Tecnologia em Telématica",
-		Organization:     "IFPB",
-		OrganizationLink: "http://ifpb.com.br",
-		Location:         "Campina Grande - PB",
-		Duration:         "2017-2021",
-	})
+	for _, item := range educationList {
+		@Education(item)
+	}
 }
 
 templ SocialIcon(url, imgPath, alt string) {
 	<a class="bg-[#95adda] rounded-full" href={ templ.SafeURL(url) } target="_blank"><img class="w-[30px] h-[30px]" src={ imgPath } alt={ alt }/></a>
 }
 
-templ Education(item *experience.EducationItemProps) {
+templ Education(item *portfolio.EducationItemProps) {
 	<div class="bg-[#050819] text-white w-full hover:scale-[103%] transition-transform my-4 p-5">
 		<h1>{ item.Type } </h1>
 		<div class="flex justify-between mb-2.5">

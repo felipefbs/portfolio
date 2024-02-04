@@ -1,6 +1,6 @@
 package templates
 
-import "github.com/felipefbs/portfolio/experience"
+import "github.com/felipefbs/portfolio/portfolio"
 
 templ Base(title string) {
 	<!DOCTYPE html>
@@ -21,18 +21,18 @@ templ Base(title string) {
 	</html>
 }
 
-templ About() {
+templ About(educationList []*portfolio.EducationItemProps) {
 	@Base("Sobre") {
 		@Header("/about")
 		<main id="main-container" class="p-10 flex justify-center">
 			<div class="m-10 flex justify-evenly flex-col w-[1500px] min-w-[700px]">
-				@AboutContent()
+				@AboutContent(educationList)
 			</div>
 		</main>
 	}
 }
 
-templ Experience(xpList []*experience.ExperienceItemProps, languageList []string, selected string) {
+templ Experience(xpList []*portfolio.JobExperienceItemProps, languageList []string, selected string) {
 	@Base("Experiências") {
 		@Header("/experience")
 		<main id="main-container" class="p-10 flex flex-col items-center">
