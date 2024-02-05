@@ -39,23 +39,7 @@ func main() {
 	fileHandler := http.FileServer(http.Dir("./static"))
 	router.Handle("/static/*", http.StripPrefix("/static/", fileHandler))
 
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "/about", http.StatusPermanentRedirect)
-	})
-
-	router.Handle("/about", templ.Handler(templates.About(portfolio.EducationList)))
-
-	languageList := make([]string, 0)
-	for _, item := range portfolio.JobList {
-		languageList = append(languageList, item.Languages...)
-	}
-
-	router.Get("/experience", func(w http.ResponseWriter, r *http.Request) {
-		skills := r.URL.Query().Get("skill")
-		templates.Experience(getXpListFiltered(skills), removeDuplicate[string](languageList), skills).Render(r.Context(), w)
-	})
-
-	router.Handle("/projects", templ.Handler(templates.Projects(portfolio.ProjectList)))
+	router.Handle("/", templ.Handler(templates.About(portfolio.EducationList)))
 
 	server := http.Server{
 		Addr:    ":8080",

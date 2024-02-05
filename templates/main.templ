@@ -44,29 +44,30 @@ templ Base(title string) {
 
 templ About(educationList []*portfolio.EducationItemProps) {
 	@Base("Sobre") {
-		@Header("/about")
-		<main id="main-container" class="p-10 flex justify-center">
-			<div class="m-10 flex justify-evenly flex-col w-[1500px] min-w-[700px]">
-				@AboutContent(educationList)
+		<main class="flex min-h-lvh flex-col lg:flex-row">
+			<div class="text-white p-20 bg-[#050819] flex flex-col justify-between">
+				<div class="">
+					<img
+						src="/static/images/felipe_ferreira.jpeg"
+						alt="felipe ferreira"
+						class="w-60 h-60 object-cover overflow-visible"
+					/>
+					<h1 class="text-7xl mb-2 ">Felipe Ferreira</h1>
+					<div class="text-2xl">
+						<p>Programador especializado em desenvolvimento Web Back-end</p>
+						<p>Apaixonado por tecnologia e fazer as coisas com as proprias mãos</p>
+					</div>
+				</div>
+				<div class="flex w-full justify-evenly m-2">
+					@SocialIcon("https://github.com/a", "/static/images/github.png", "github")
+					@SocialIcon("https://instagram.com/felipef.bs", "/static/images/instagram.png", "instagram")
+					@SocialIcon("https://linkedin.com/in/felipefbs", "/static/images/linkedin.png", "linkedin")
+					<a href="mailto: felipeffbs3x@gmail.com">felipeffbs3x@gmail.com</a>
+				</div>
 			</div>
-		</main>
-	}
-}
-
-templ Experience(xpList []*portfolio.JobExperienceItemProps, languageList []string, selected string) {
-	@Base("Experiências") {
-		@Header("/experience")
-		<main id="main-container" class="p-10 flex flex-col items-center">
-			@ExperienceList(xpList)
-		</main>
-	}
-}
-
-templ Projects(itemList []*portfolio.ProjectItemProps) {
-	@Base("Projetos") {
-		@Header("/projects")
-		<main id="main-container" class="p-10">
-			@ProjectList(itemList)
+			<div class="overflow-y-scroll h-lvh w-full overflow-x-hidden">
+				@ExperienceList(portfolio.JobList)
+			</div>
 		</main>
 	}
 }
