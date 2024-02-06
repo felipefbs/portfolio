@@ -3,15 +3,15 @@ package templates
 import "github.com/felipefbs/portfolio/portfolio"
 
 templ AboutContent(educationList []*portfolio.EducationItemProps) {
-	<div class="flex pl-10 mb-10 bg-[#0C0D2D]">
+	<div class="flex md:pl-10 md:mb-10 bg-[#0C0D2D] flex-col md:flex-row w-full">
 		<img
 			src="/static/images/felipe_ferreira.jpeg"
 			alt="felipe ferreira"
-			class="w-60 h-60 object-cover overflow-visible "
+			class="w-60 h-60 object-cover overflow-visible hidden md:block"
 		/>
-		<div class="text-white m-5 ">
-			<h1 class="text-7xl mb-2 ">Felipe Ferreira</h1>
-			<strong class="text-xl">| Backend Developer specializend in Go |</strong>
+		<div class="text-white m-5">
+			<h1 class="text-3xl sm:text-5xl md:text-7xl">Felipe Ferreira</h1>
+			<strong class="text:md sm:text-xl m-2">| Backend Developer specializend in Go |</strong>
 			<div class="social text-black flex w-[150px] justify-between m-2">
 				@SocialIcon("https://github.com/felipefbs", "/static/images/github.png", "github")
 				@SocialIcon("https://instagram.com/felipef.bs", "/static/images/instagram.png", "instagram")
@@ -19,7 +19,7 @@ templ AboutContent(educationList []*portfolio.EducationItemProps) {
 			</div>
 		</div>
 	</div>
-	<p class="text-white bg-[#050819] text-2xl w-full mb-10 p-5">
+	<p class="text-white bg-[#050819] text-sm w-full md:text-2xl mb-10 p-5 md:block">
 		Especializado em desenvolvimento Back-End e com conhecimentos sólidos em áreas adjacentes como segurança da informação, comunicação entre serviços, banco de dados entre outros assuntos.
 		Possuo experiência em desenvolvimento de APIs REST com arquitetura de microsserviços utilizando metodologias como TDD e modelagem de negocio utilizando DDD.
 		Facilidade de trabalho remoto em equipe, principalmente utilizando metodologias ágeis e ferramentas de versionamento de código.
@@ -36,11 +36,10 @@ templ SocialIcon(url, imgPath, alt string) {
 }
 
 templ Education(item *portfolio.EducationItemProps) {
-	<div class="bg-[#050819] text-white w-full hover:scale-[103%] transition-transform my-4 p-5">
+	<div class="bg-[#050819] text-white md:w-full hover:scale-[103%] transition-transform my-4 p-5">
 		<h1>{ item.Type } </h1>
-		<div class="flex justify-between mb-2.5">
+		<div class="flex flex-col md:flex-row justify-between mb-2.5">
 			<div>
-				// <p>{ item.Course }</p>
 				<span class="text-lg font-bold">{ item.Title }</span>
 				<a class="text-lg font-semibold underline target:shadow-lg" href={ templ.URL(item.OrganizationLink) } target="_blank">{ "@"+item.Organization }</a>
 				<p class="text-sm">{ item.Location }</p>

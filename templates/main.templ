@@ -24,8 +24,8 @@ templ Base(title string) {
 templ About(educationList []*portfolio.EducationItemProps) {
 	@Base("Sobre") {
 		@Header("/about")
-		<main id="main-container" class="p-10 flex justify-center">
-			<div class="m-10 flex justify-evenly flex-col w-[1500px] min-w-[700px]">
+		<main id="main-container" class="sm:p-10 flex justify-center">
+			<div class="flex justify-evenly flex-col w-[1500px] md:min-w-[700px] min-w-[350px] bg-[#2D3470] mt-10">
 				@AboutContent(educationList)
 			</div>
 		</main>
@@ -35,7 +35,7 @@ templ About(educationList []*portfolio.EducationItemProps) {
 templ Experience(xpList []*portfolio.JobExperienceItemProps, languageList []string, selected string) {
 	@Base("Experiências") {
 		@Header("/experience")
-		<main id="main-container" class="p-10 flex flex-col items-center">
+		<main id="main-container" class="sm:p-10 flex flex-col items-center">
 			@ExperienceList(xpList)
 		</main>
 	}
