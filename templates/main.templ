@@ -13,7 +13,7 @@ templ Base(title string) {
 			<link rel="preconnect" href="https://fonts.googleapis.com"/>
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 			<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet"/>
-			<title>{ title }</title>
+			<title>{ "felipefbs - " + title }</title>
 		</head>
 		<body class="bg-[#2D3470] font-body">
 			{ children... }
@@ -24,8 +24,8 @@ templ Base(title string) {
 templ About(educationList []*portfolio.EducationItemProps) {
 	@Base("Sobre") {
 		@Header("/about")
-		<main id="main-container" class="sm:p-10 flex justify-center">
-			<div class="flex justify-evenly flex-col w-[1500px] md:min-w-[700px] min-w-[350px] bg-[#2D3470] mt-10">
+		<main id="main-container" class="sm:p-10 flex justify-center mt-10">
+			<div class="flex justify-evenly flex-col w-[1500px] md:min-w-[700px] min-w-[350px]">
 				@AboutContent(educationList)
 			</div>
 		</main>
@@ -35,7 +35,7 @@ templ About(educationList []*portfolio.EducationItemProps) {
 templ Experience(xpList []*portfolio.JobExperienceItemProps, languageList []string, selected string) {
 	@Base("Experiências") {
 		@Header("/experience")
-		<main id="main-container" class="sm:p-10 flex flex-col items-center">
+		<main id="main-container" class="md:p-10 flex justify-center mt-10">
 			@ExperienceList(xpList)
 		</main>
 	}

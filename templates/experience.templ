@@ -3,7 +3,7 @@ package templates
 import "github.com/felipefbs/portfolio/portfolio"
 
 templ ExperienceList(itemList []*portfolio.JobExperienceItemProps) {
-	<div id="xp-list" class="m-10 flex flex-col w-full max-w-[1500px]">
+	<div id="xp-list" class="flex flex-col w-full max-w-[1500px]">
 		for _, xp := range itemList {
 			@ExperienceItem(xp)
 		}
@@ -11,37 +11,37 @@ templ ExperienceList(itemList []*portfolio.JobExperienceItemProps) {
 }
 
 templ ExperienceItem(item *portfolio.JobExperienceItemProps) {
-	<div class="bg-[#050819] text-white m-5 p-3 min-w-96 max-w-4xl even:self-end hover:scale-[103%] transition-transform">
-		<div class="flex justify-between mb-2.5">
-			<div class="job">
-				<span class="text-lg font-bold">{ item.JobTitle }</span>
+	<div class="bg-[#050819] text-white mb-5 p-3 max-w-4xl even:self-end md:hover:scale-[103%] transition-transform">
+		<div class="flex flex-col md:flex-row justify-between">
+			<div class="">
+				<span class="text-md md:text-lg font-bold">{ item.JobTitle }</span>
 				<a class="text-lg font-semibold underline target:shadow-lg" href={ templ.URL(item.OrganizationLink) } target="_blank">{ "@"+item.Organization }</a>
 				<p class="text-sm">{ item.Location }</p>
 			</div>
 			<strong>{ item.Duration }</strong>
 		</div>
-		<div class="my-5">
-			<p>Linguagens utilizadas</p>
+		<div class="my-5 block">
+			<p class="invisible sm:visible">Linguagens utilizadas</p>
 			for index, i := range item.Languages {
 				if index != 0 {
 					,
 				}
-				<strong>{ i }</strong>
+				<strong class="text-sm md:text-lg">{ i }</strong>
 			}
-			<p>Outras tecnologias utilizadas</p>
+			<p class="invisible sm:visible">Outras tecnologias utilizadas</p>
 			for index, i := range item.Technologies {
 				if index != 0 {
 					,
 				}
-				<strong>{ i }</strong>
+				<strong class="text-sm md:text-lg">{ i }</strong>
 			}
 		</div>
-		<div class="mt-5">
+		<div>
 			<p>Fui responsavel pela...</p>
 			<ul class="list-disc list-inside">
 				for _, i := range item.Responsibilities {
 					<li>
-						<strong>{ i }</strong>
+						<strong class="text-sm md:text-lg">{ i }</strong>
 					</li>
 				}
 			</ul>
