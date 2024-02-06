@@ -1,6 +1,26 @@
 package templates
 
-import "github.com/felipefbs/portfolio/portfolio"
+script HotReload() {
+	let loc = window.location;
+	let uri = loc.protocol === 'https:' ? 'wss:' : 'ws:';
+	uri += '\/\/' + loc.host;
+	uri += '/reload';
+
+	function tryConnect() {
+		socket = new WebSocket(uri);
+		socket.onopen = function() {
+			location.reload();
+		};
+		socket.onerror = function() {
+			setTimeout(tryConnect, 100);
+		};
+	}
+
+	let socket = new WebSocket(uri);
+	socket.onclose = function() {
+		setTimeout(tryConnect, 100);
+	};
+}
 
 templ Base(title string) {
 	<!DOCTYPE html>
@@ -13,61 +33,43 @@ templ Base(title string) {
 			<link rel="preconnect" href="https://fonts.googleapis.com"/>
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 			<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet"/>
-			<title>{ title }</title>
+			<title>{ "felipefbs - " + title }</title>
 		</head>
 		<body class="bg-[#2D3470] font-body">
 			{ children... }
 		</body>
+		@HotReload()
 	</html>
-	<script>
-		let loc = window.location;
-		let uri = loc.protocol === 'https:' ? 'wss:' : 'ws:';
-		uri += '\/\/' + loc.host;
-		uri += '/reload';
-
-		function tryConnect() {
-			socket = new WebSocket(uri);
-			socket.onopen = function() {
-				location.reload();
-			};
-			socket.onerror = function() {
-				setTimeout(tryConnect, 100);
-			};
-		}
-
-		let socket = new WebSocket(uri);
-		socket.onclose = function() {
-			setTimeout(tryConnect, 100);
-		};
-	</script>
 }
 
-templ About(educationList []*portfolio.EducationItemProps) {
+templ Main(selected map[string]bool) {
 	@Base("Sobre") {
-		<main class="flex min-h-lvh flex-col lg:flex-row">
-			<div class="text-white p-20 bg-[#050819] flex flex-col justify-between">
-				<div class="">
-					<img
-						src="/static/images/felipe_ferreira.jpeg"
-						alt="felipe ferreira"
-						class="w-60 h-60 object-cover overflow-visible"
-					/>
-					<h1 class="text-7xl mb-2 ">Felipe Ferreira</h1>
-					<div class="text-2xl">
-						<p>Programador especializado em desenvolvimento Web Back-end</p>
-						<p>Apaixonado por tecnologia e fazer as coisas com as proprias mãos</p>
-					</div>
-				</div>
-				<div class="flex w-full justify-evenly m-2">
-					@SocialIcon("https://github.com/a", "/static/images/github.png", "github")
-					@SocialIcon("https://instagram.com/felipef.bs", "/static/images/instagram.png", "instagram")
-					@SocialIcon("https://linkedin.com/in/felipefbs", "/static/images/linkedin.png", "linkedin")
-					<a href="mailto: felipeffbs3x@gmail.com">felipeffbs3x@gmail.com</a>
-				</div>
-			</div>
-			<div class="overflow-y-scroll h-lvh w-full overflow-x-hidden">
-				@ExperienceList(portfolio.JobList)
-			</div>
+		@About()
+		<main class="flex min-h-lvh flex-col lg:flex-row w-2/3">
+			<div id="timeline" class="overflow-y-scroll h-lvh w-full overflow-x-hidden"></div>
 		</main>
 	}
+}
+
+templ About() {
+	<div class="text-white p-20 bg-[#050819] flex flex-col justify-between">
+		<div>
+			<img
+				src="/static/images/felipe_ferreira.jpeg"
+				alt="felipe ferreira"
+				class="w-60 h-60 object-cover overflow-visible"
+			/>
+			<h1 class="text-7xl mb-2 ">Felipe Ferreira</h1>
+			<div class="text-2xl">
+				<p>Programador especializado em desenvolvimento Web Back-end</p>
+				<p>Apaixonado por tecnologia e fazer as coisas com as proprias mãos</p>
+			</div>
+		</div>
+		<div class="flex w-full justify-evenly m-2">
+			@SocialIcon("https://github.com/a", "/static/images/github.png", "github")
+			@SocialIcon("https://instagram.com/felipef.bs", "/static/images/instagram.png", "instagram")
+			@SocialIcon("https://linkedin.com/in/felipefbs", "/static/images/linkedin.png", "linkedin")
+			<a href="mailto: felipeffbs3x@gmail.com">felipeffbs3x@gmail.com</a>
+		</div>
+	</div>
 }

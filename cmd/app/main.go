@@ -7,7 +7,6 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/a-h/templ"
 	"github.com/felipefbs/portfolio/portfolio"
 	"github.com/felipefbs/portfolio/templates"
 	"github.com/go-chi/chi/v5"
@@ -39,7 +38,24 @@ func main() {
 	fileHandler := http.FileServer(http.Dir("./static"))
 	router.Handle("/static/*", http.StripPrefix("/static/", fileHandler))
 
-	router.Handle("/", templ.Handler(templates.About(portfolio.EducationList)))
+	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		// list := portfolio.JobList
+		skill := r.URL.Query()["skill"]
+
+		fmt.Println(skill)
+		// if len(skill) != 0 {
+		// 	templates.ExperienceList(list)
+		// 	return
+		// }
+
+		selected := make(map[string]bool)
+
+		for _, v := range skill {
+			selected[v] = true
+		}
+
+		templates.Main(selected).Render(r.Context(), w)
+	})
 
 	server := http.Server{
 		Addr:    ":8080",

@@ -27,7 +27,7 @@ templ AboutContent(educationList []*portfolio.EducationItemProps) {
 		Sempre procurando aperfeiçoar os conhecimentos em desenvolvimento de software, em especial arquitetura de software.
 	</p>
 	for _, item := range educationList {
-		@Education(item)
+		@EducationItem(item)
 	}
 }
 
@@ -35,7 +35,7 @@ templ SocialIcon(url, imgPath, alt string) {
 	<a class="bg-[#95adda] rounded-full" href={ templ.SafeURL(url) } target="_blank"><img class="w-[30px] h-[30px]" src={ imgPath } alt={ alt }/></a>
 }
 
-templ Education(item *portfolio.EducationItemProps) {
+templ EducationItem(item *portfolio.EducationItemProps) {
 	<div class="bg-[#050819] text-white w-full hover:scale-[103%] transition-transform my-4 p-5">
 		<h1>{ item.Type } </h1>
 		<div class="flex justify-between mb-2.5">

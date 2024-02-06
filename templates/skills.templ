@@ -2,17 +2,30 @@ package templates
 
 import "fmt"
 
-templ Skills(languageList []string, selected string) {
-	<div class="skill-list flex w-full justify-evenly text-xl flex-wrap" hx-boost="true">
+templ Skills(languageList []string, selected map[string]bool) {
+	<div class="skill-list flex w-full justify-evenly text-xl flex-wrap">
 		for _, item := range languageList {
-			@SkillItem(item, selected)
+			@SkillItem(item, selected[item])
 		}
 	</div>
 }
 
-templ SkillItem(skill, selected string) {
-	<a
-		href={ templ.URL("/experience?skill=" + skill) }
+script togleParam(value string) {
+	let url = window.location.href;
+	console.log(url, value)
+	if (url.includes("skill=" + value)){
+		console.log(url, value)
+		url = url.replace(new RegExp("[?&]skill" + value), "")
+	} else {
+		url += (url.indexOf("?") === -1 ? "?" : "&") + "skill=" + value;
+	}
+
+	// Atualize a URL sem recarregar a página
+	window.history.pushState({path: url}, "", url);
+}
+
+templ SkillItem(skill string, selected bool) {
+	<button
 		class="
         w-[100px] 
         h-[100px]
@@ -25,6 +38,11 @@ templ SkillItem(skill, selected string) {
 		flex justify-center items-center
 		border-double border-4 border-[#050819]
 		"
-		aria-selected={ fmt.Sprint(selected == skill) }
-	>{ skill }</a>
+		hx-get="/timeline"
+		hx-on:click={ togleParam(skill) }
+		hx-replace-url="true"
+		aria-selected={ fmt.Sprint(selected) }
+		hx-select="#timeline"
+		hx-target="#timeline"
+	>{ skill }</button>
 }
