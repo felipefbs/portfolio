@@ -1,12 +1,39 @@
 package portfolio
 
 var (
+	accenture = &JobExperienceItemProps{
+		JobTitle:         "Especialista em Engenharia de Software",
+		Organization:     "Accenture",
+		OrganizationLink: "https://www.accenture.com/",
+		Location:         "Campina Grande - PB",
+		Duration:         "Ago, 2025",
+		Responsibilities: []string{
+			"Otimização de Performance: Refatorei o motor de processamento utilizando Goroutines para paralelismo extremo, resultando em uma redução de 70% no consumo de RAM através de estratégias de carregamento seletivo de dados.",
+			"Processamento em Alta Escala: Desenvolvi e mantive pipelines robustas em Golang capazes de processar mais de 30.000 arquivos de vídeo por dia, garantindo alta disponibilidade e vazão.",
+		},
+		Technologies: []string{"gRPC", "TDD"},
+		Languages:    []string{"Go", "Protobuf"},
+	}
+	kuri = &JobExperienceItemProps{
+		JobTitle:         "Engenheiro de Software",
+		Organization:     "Kuri",
+		OrganizationLink: "https://www.kuri.ai/",
+		Location:         "São Paulo - SP",
+		Duration:         "Abr, 2025 - Ago, 2025",
+		Responsibilities: []string{
+			"Mantive e evoluí o código existente: correção de bugs e implementação de novas funcionalidades.",
+			"Desenvolvi ferramentas internas para melhorar a rastreabilidade e monitoramento das pipelines de processamento.",
+			"Usei modelos e ferramentas de IA para extrair e transformar informações de PDFs em dados estruturados.",
+		},
+		Technologies: []string{"LLM", "GenAI"},
+		Languages:    []string{"Python", "SQL"},
+	}
 	theia = &JobExperienceItemProps{
 		JobTitle:         "Desenvolvedor Back-end Pleno",
 		Organization:     "Theia",
 		OrganizationLink: "https://www.theia.com.br/",
-		Location:         "São Paulo - SP (Remoto)",
-		Duration:         "Jun, 2022 - Dez, 2023",
+		Location:         "São Paulo - SP",
+		Duration:         "Jun, 2022 - Mar, 2025",
 		Responsibilities: []string{
 			"Implementação de diversos novos serviços em Go renovando os projetos legados, implementando em uma arquitetura distribuída e garantido seguridade de evolução através de testes robustos",
 			"Automatização de processos manuais garantindo maior consistência e padronização",
@@ -19,7 +46,7 @@ var (
 		JobTitle:         "Desenvolvedor Back-end",
 		Organization:     "Apoio Ecolimp",
 		OrganizationLink: "https://apoioecolimp.com/",
-		Location:         "Rio de Janeiro - RJ (Remoto)",
+		Location:         "Rio de Janeiro - RJ",
 		Duration:         "Fev, 2022 - Jun, 2022",
 		Responsibilities: []string{
 			"Implementação serviços utilizando Go em conjunto a diversos padrões de mercado para garantir rastreabilidade, consistência e manutenibilidade de código",
@@ -44,7 +71,7 @@ var (
 		JobTitle:         "Facilitador Tech",
 		Organization:     "Resilia Educação",
 		OrganizationLink: "https://www.resilia.com.br/",
-		Location:         "Rio de Janeiro - RJ (Remoto)",
+		Location:         "Rio de Janeiro - RJ",
 		Duration:         "Mai, 2021 - Dez, 2021",
 		Technologies:     []string{"Docker", "express.js", "node.js", "MySQL"},
 		Responsibilities: []string{
@@ -71,7 +98,7 @@ var (
 	}
 )
 
-var JobList = []*JobExperienceItemProps{theia, apoio, lsd, resilia, gcompi}
+var JobList = []*JobExperienceItemProps{accenture, kuri, theia, apoio, lsd, resilia, gcompi}
 
 type JobExperienceItemProps struct {
 	JobTitle         string
