@@ -21,7 +21,7 @@ var (
 		Duration:         "2017-2021",
 	}
 
-	EducationList = []*EducationItemProps{telematica, fullCycle}
+	EducationList = []*EducationItemProps{telematica}
 )
 
 type EducationItemProps struct {
