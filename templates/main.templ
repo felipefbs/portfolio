@@ -4,18 +4,17 @@ import "github.com/felipefbs/portfolio/portfolio"
 
 templ Base(title string) {
 	<!DOCTYPE html>
-	<html lang="pt-BR">
+	<html lang="pt-BR" class="scroll-smooth">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<link href="./static/styles/output.css" rel="stylesheet"/>
-			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+			<link href="/static/styles/output.css" rel="stylesheet"/>
 			<link rel="preconnect" href="https://fonts.googleapis.com"/>
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-			<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet"/>
+			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 			<title>{ "felipefbs - " + title }</title>
 		</head>
-		<body class="bg-[#2D3470] font-body">
+		<body class="bg-zinc-950 text-zinc-300 font-['Inter'] antialiased min-h-screen">
 			{ children... }
 		</body>
 	</html>
@@ -24,10 +23,8 @@ templ Base(title string) {
 templ About(educationList []*portfolio.EducationItemProps) {
 	@Base("Sobre") {
 		@Header("/about")
-		<main id="main-container" class="sm:p-10 flex justify-center mt-10">
-			<div class="flex justify-evenly flex-col w-[1500px] md:min-w-[700px] min-w-[350px]">
-				@AboutContent(educationList)
-			</div>
+		<main class="max-w-4xl mx-auto px-6 py-16">
+			@AboutContent(educationList)
 		</main>
 	}
 }
@@ -35,8 +32,13 @@ templ About(educationList []*portfolio.EducationItemProps) {
 templ Experience(xpList []*portfolio.JobExperienceItemProps, languageList []string, selected string) {
 	@Base("Experiências") {
 		@Header("/experience")
-		<main id="main-container" class="md:p-10 flex justify-center mt-10">
-			@ExperienceList(xpList)
+		<main class="max-w-4xl mx-auto px-6 py-16">
+			<h2 class="text-2xl font-semibold text-zinc-100 mb-8">Experiências Profissionais</h2>
+			<div class="space-y-6">
+				for _, xp := range xpList {
+					@ExperienceItem(xp)
+				}
+			</div>
 		</main>
 	}
 }
@@ -44,8 +46,13 @@ templ Experience(xpList []*portfolio.JobExperienceItemProps, languageList []stri
 templ Projects(itemList []*portfolio.ProjectItemProps) {
 	@Base("Projetos") {
 		@Header("/projects")
-		<main id="main-container" class="p-10">
-			@ProjectList(itemList)
+		<main class="max-w-4xl mx-auto px-6 py-16">
+			<h2 class="text-2xl font-semibold text-zinc-100 mb-8">Projetos</h2>
+			<div class="grid gap-6 md:grid-cols-2">
+				for _, project := range itemList {
+					@ProjectItem(project)
+				}
+			</div>
 		</main>
 	}
 }

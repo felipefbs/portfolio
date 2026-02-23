@@ -2,49 +2,42 @@ package templates
 
 import "github.com/felipefbs/portfolio/portfolio"
 
-templ ExperienceList(itemList []*portfolio.JobExperienceItemProps) {
-	<div id="xp-list" class="flex flex-col w-full max-w-[1500px]">
-		for _, xp := range itemList {
-			@ExperienceItem(xp)
-		}
-	</div>
-}
-
 templ ExperienceItem(item *portfolio.JobExperienceItemProps) {
-	<div class="bg-[#050819] text-white mb-5 p-3 max-w-4xl even:self-end md:hover:scale-[103%] transition-transform">
-		<div class="flex flex-col md:flex-row justify-between">
+	<article class="p-6 bg-zinc-900/50 rounded-xl border border-zinc-800 hover:border-zinc-700 transition-all hover:shadow-lg hover:shadow-emerald-900/10">
+		<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
 			<div>
-				<span class="text-2xl font-bold">{ item.JobTitle }</span>
-				<a class="text-lg font-semibold underline target:shadow-lg" href={ templ.URL(item.OrganizationLink) } target="_blank">{ "@"+item.Organization }</a>
-				<p class="text-sm">{ item.Location }</p>
+				<h3 class="text-xl font-semibold text-zinc-100">{ item.JobTitle }</h3>
+				<a href={ templ.URL(item.OrganizationLink) } target="_blank" class="text-emerald-400 hover:text-emerald-300 font-medium">
+					{ item.Organization }
+				</a>
+				<p class="text-zinc-500 text-sm mt-1">{ item.Location }</p>
 			</div>
-			<strong>{ item.Duration }</strong>
+			<span class="text-sm text-zinc-400 bg-zinc-800 px-3 py-1 rounded-full">
+				{ item.Duration }
+			</span>
 		</div>
-		<div class="my-5 block">
-			<p>Linguagens utilizadas</p>
-			for index, i := range item.Languages {
-				if index != 0 {
-					,
+
+		<div class="mb-4">
+			<p class="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-2">Stack</p>
+			<div class="flex flex-wrap gap-2">
+				for _, lang := range item.Languages {
+					<span class="px-2 py-1 bg-zinc-800 text-zinc-300 text-xs rounded">{ lang }</span>
 				}
-				<strong class="text-sm md:text-lg">{ i }</strong>
-			}
-			<p>Outras tecnologias utilizadas</p>
-			for index, i := range item.Technologies {
-				if index != 0 {
-					,
+				for _, tech := range item.Technologies {
+					<span class="px-2 py-1 bg-zinc-800/50 text-zinc-400 text-xs rounded">{ tech }</span>
 				}
-				<strong class="text-sm md:text-lg">{ i }</strong>
-			}
+			</div>
 		</div>
-		<div>
-			<p>Fui responsavel pela...</p>
-			<ul class="list-disc list-inside">
-				for _, i := range item.Responsibilities {
-					<li>
-						<strong class="text-sm md:text-lg">{ i }</strong>
+
+		if len(item.Responsibilities) > 0 {
+			<ul class="space-y-2">
+				for _, resp := range item.Responsibilities {
+					<li class="text-zinc-400 text-sm flex gap-2">
+						<span class="text-emerald-400">▸</span>
+						{ resp }
 					</li>
 				}
 			</ul>
-		</div>
-	</div>
+		}
+	</article>
 }

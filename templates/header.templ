@@ -3,11 +3,16 @@ package templates
 import "fmt"
 
 templ Header(selected string) {
-	<header>
-		<nav class="bg-[#0C0D2D] flex justify-around h-10 items-center mx-0" hx-boost="true">
-			@HeaderAnchor("/about", "Sobre", selected)
-			@HeaderAnchor("/experience", "Experiências", selected)
-			@HeaderAnchor("/projects", "Projetos", selected)
+	<header class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
+		<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+			<a href="/about" class="text-zinc-100 font-semibold hover:text-emerald-400 transition-colors">
+				felipefbs
+			</a>
+			<div class="flex gap-8">
+				@HeaderAnchor("/about", "Sobre", selected)
+				@HeaderAnchor("/experience", "Experiência", selected)
+				@HeaderAnchor("/projects", "Projetos", selected)
+			</div>
 		</nav>
 	</header>
 }
@@ -15,14 +20,7 @@ templ Header(selected string) {
 templ HeaderAnchor(slug templ.SafeURL, text, selected string) {
 	<a
 		href={ slug }
-		class="px-2.5 mx-0
-			 hover:bg-[#3A4886]
-			 aria-selected:bg-[#2D3470]
-			 text-white
-             flex-1
-             text-center
-             leading-10
-			 transition-colors"
-		aria-selected={ fmt.Sprint(selected == string(slug)) }
+		class={ fmt.Sprintf("text-sm font-medium transition-colors hover:text-zinc-100 %s", 
+			map[bool]string{selected == string(slug): "text-emerald-400", selected != string(slug): "text-zinc-400"}[true]) }
 	>{ text }</a>
 }
