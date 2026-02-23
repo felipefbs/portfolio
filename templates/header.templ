@@ -5,22 +5,22 @@ import "fmt"
 templ Header(selected string) {
 	<header class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
 		<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-			<a href="/about" class="text-zinc-100 font-semibold hover:text-emerald-400 transition-colors">
+			<a href="/" class="text-zinc-100 font-semibold hover:text-emerald-400 transition-colors">
 				felipefbs
 			</a>
 			<div class="flex gap-8">
-				@HeaderAnchor("/about", "Sobre", selected)
-				@HeaderAnchor("/experience", "Experiência", selected)
-				@HeaderAnchor("/projects", "Projetos", selected)
+				@HeaderAnchor("#about", "Sobre", selected)
+				@HeaderAnchor("#experience", "Experiência", selected)
+				@HeaderAnchor("#projects", "Projetos", selected)
 			</div>
 		</nav>
 	</header>
 }
 
-templ HeaderAnchor(slug templ.SafeURL, text, selected string) {
+templ HeaderAnchor(slug, text, selected string) {
 	<a
-		href={ slug }
+		href={ templ.SafeURL(slug) }
 		class={ fmt.Sprintf("text-sm font-medium transition-colors hover:text-zinc-100 %s", 
-			map[bool]string{selected == string(slug): "text-emerald-400", selected != string(slug): "text-zinc-400"}[true]) }
+			map[bool]string{selected == slug: "text-emerald-400", selected != slug: "text-zinc-400"}[true]) }
 	>{ text }</a>
 }
