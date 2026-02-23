@@ -16,7 +16,7 @@ var (
 		Title:            "Tecnólogo em Telématica",
 		Course:           "Curso superior de Tecnologia em Telématica",
 		Organization:     "IFPB",
-		OrganizationLink: "http://ifpb.com.br",
+		OrganizationLink: "https://estudante.ifpb.edu.br/cursos/27/",
 		Location:         "Campina Grande - PB",
 		Duration:         "2017-2021",
 	}
