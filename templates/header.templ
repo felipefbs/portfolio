@@ -3,9 +3,9 @@ package templates
 import "fmt"
 
 templ Header(selected string) {
-	<header class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
+	<header class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
 		<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-			<a href="/" class="text-zinc-100 font-semibold hover:text-emerald-400 transition-colors">
+			<a href="/" class="text-text-primary font-semibold hover:text-accent transition-colors">
 				felipefbs
 			</a>
 			<div class="flex gap-8">
@@ -20,7 +20,7 @@ templ Header(selected string) {
 templ HeaderAnchor(slug, text, selected string) {
 	<a
 		href={ templ.SafeURL(slug) }
-		class={ fmt.Sprintf("text-sm font-medium transition-colors hover:text-zinc-100 %s", 
-			map[bool]string{selected == slug: "text-emerald-400", selected != slug: "text-zinc-400"}[true]) }
+		class={ fmt.Sprintf("text-sm font-medium transition-colors hover:text-text-primary %s", 
+			map[bool]string{selected == slug: "text-accent", selected != slug: "text-text-muted"}[true]) }
 	>{ text }</a>
 }

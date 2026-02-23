@@ -14,7 +14,7 @@ templ Base(title string) {
 			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 			<title>{ "felipefbs - " + title }</title>
 		</head>
-		<body class="bg-zinc-950 text-zinc-300 font-['Inter'] antialiased min-h-screen">
+		<body class="bg-background text-text-secondary font-['Inter'] antialiased min-h-screen">
 			{ children... }
 		</body>
 	</html>
@@ -32,10 +32,10 @@ templ Home(
 				@AboutContent(educationList)
 			</section>
 
-			<div class="border-t border-zinc-800"></div>
+			<div class="border-t border-border"></div>
 
 			<section id="experience" class="py-12">
-				<h2 class="text-2xl font-semibold text-zinc-100 mb-8">Experiências Profissionais</h2>
+				<h2 class="text-2xl font-semibold text-text-primary mb-8">Experiências Profissionais</h2>
 				<div class="space-y-6">
 					for _, xp := range xpList {
 						@ExperienceItem(xp)
@@ -43,10 +43,10 @@ templ Home(
 				</div>
 			</section>
 
-			<div class="border-t border-zinc-800"></div>
+			<div class="border-t border-border"></div>
 
 			<section id="projects" class="py-12">
-				<h2 class="text-2xl font-semibold text-zinc-100 mb-8">Projetos</h2>
+				<h2 class="text-2xl font-semibold text-text-primary mb-8">Projetos</h2>
 				<div class="grid gap-6 md:grid-cols-2">
 					for _, project := range projectList {
 						@ProjectItem(project)
